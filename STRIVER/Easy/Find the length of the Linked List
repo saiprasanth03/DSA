@@ -1,0 +1,25 @@
+You are given the head of a singly linked list. Your task is to return the number of nodes in the linked list.
+Example 1
+Input: head = [1, 2, 3, 4, 5]
+Output: 5
+Example 2
+Input: head = [8, 6]
+Output: 2
+
+Constraints:-
+0 <= number of nodes in the Linked List <= 10^5
+0 <= ListNode.val <= 10^4
+
+//code
+class Solution {
+    public int getLength(ListNode head) {
+        // Your code goes here
+        int c=0;
+        ListNode temp=head;
+        while(temp!=null){
+            c++;
+            temp=temp.next;
+        }
+        return c;
+    }
+}
