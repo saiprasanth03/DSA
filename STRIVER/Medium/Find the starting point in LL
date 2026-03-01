@@ -1,0 +1,53 @@
+Given the head of a singly linked list, the task is to find the starting point of a loop in the linked list if it exists. Return the starting node if a loop exists; otherwise, return null.
+A loop exists in a linked list if some node in the list can be reached again by continuously following the next pointer. Internally, pos denotes the index (0-based) of the node from where the loop starts.
+Note that pos is not passed as a parameter.
+Example 1
+Input: head -> 1 -> 2 -> 3 -> 4 -> 5, pos = 1
+Output(value of the returned node is displayed): 2
+Expla﻿nation: The tail of the linked list connects to the node at 1st index.
+Example 2
+Input: head -> 1 -> 3 -> 7 -> 4, pos = -1
+Output(value of the returned node is displayed): null
+Explanation: No loop is present in the linked list.
+
+Constraints:-
+0 <= number of nodes in the cycle <= 10^5
+0 <= ListNode.val <= 10^4
+pos is -1 or a valid index in the linked list
+
+//code
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+class Solution {
+    public ListNode findStartingPoint(ListNode head) {
+        ListNode temp=head;
+        ListNode ans=null;
+        HashMap<ListNode,Integer> set = new HashMap<>();
+        while(temp!=null){
+            if(!set.containsKey(temp)){
+                set.put(temp,1);
+                temp=temp.next;
+            }else{
+                ans=temp;
+                break;
+            }
+        }
+        return ans;
+    }
+}
