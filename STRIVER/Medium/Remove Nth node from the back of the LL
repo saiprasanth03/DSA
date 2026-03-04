@@ -1,0 +1,56 @@
+Given the head of a singly linked list and an integer n. Remove the nth node from the back of the linked List and return the head of the modified list. 
+The value of n will always be less than or equal to the number of nodes in the linked list.
+Example 1
+Input: head -> 1 -> 2 -> 3 -> 4 -> 5, n = 2
+Output: head -> 1 -> 2 -> 3 -> 5
+Explanation: The 2nd node from the back was the node with value 4.
+Example 2
+Input: head -> 5 -> 4 -> 3 -> 2 -> 1, n = 5
+Output: head -> 4 -> 3 -> 2 -> 1
+Explanation: The 5th node from the back is the first node.
+
+Constraints:-
+1 <= number of nodes in the Linked List <= 10^5
+0 <= ListNode.val <= 10^4
+1 <= n <= number of nodes in the Linked List.
+
+//code
+/*Definition for Singly Linked List
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        // Move fast pointer n+1 steps
+        for (int i = 0; i <= n; i++) {
+            fast = fast.next;
+        }
+        // Move both pointers
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        // Remove the node
+        slow.next = slow.next.next;
+        return dummy.next;
+    }
+}
+
