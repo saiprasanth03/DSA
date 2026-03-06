@@ -1,0 +1,55 @@
+Given the head of a singly linked list consisting of only 0, 1 or 2.
+Sort the given linked list and return the head of the modified list.
+Do it in-place by changing the links between the nodes without creating new nodes.
+
+Example 1
+Input: linkedList = [1, 0, 2, 0 , 1]
+Output: [0, 0, 1, 1, 2]
+Explanation: The values after sorting are [0, 0, 1, 1, 2].
+
+Example 2
+Input: linkedList = [1, 1, 1, 0]
+Output: [0, 1, 1, 1]
+Explanation: The values after sorting are [0, 1, 1, 1].
+
+Constraints:-
+0 <= number of nodes in the Linked List <= 10^5
+0 <= ListNode.val <= 2
+
+//code
+/*
+Definition of singly linked list:
+class ListNode{
+    public int data;
+    public ListNode next;
+    ListNode() { data = 0; next = null; }
+    ListNode(int x) { data = x; next = null; }
+    ListNode(int x, ListNode next) { data = x; this.next = next; }
+}
+*/
+class Solution {
+    public ListNode sortList(ListNode head) {
+        //YOUR CODE GOES HERE
+        ListNode zeronode = new ListNode(-1);
+        ListNode onenode = new ListNode(-1);
+        ListNode twonode = new ListNode(-1);
+        ListNode temp= head,zero=zeronode,one=onenode,two=twonode;
+        while(temp!=null){
+            if(temp.data==0){
+                zero.next=temp;
+                zero= zero.next;
+            }else if(temp.data==1){
+                one.next=temp;
+                one= one.next;
+            }else{
+                two.next=temp;
+                two= two.next;
+            }
+            temp=temp.next;
+        }
+        zero.next=(onenode.next==null)? twonode.next : onenode.next;
+        one.next=twonode.next;
+        two.next=null;
+        return zeronode.next;
+    }
+}
