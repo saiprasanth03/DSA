@@ -35,22 +35,21 @@ class ListNode {
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode fast = dummy;
-        ListNode slow = dummy;
-        // Move fast pointer n+1 steps
-        for (int i = 0; i <= n; i++) {
-            fast = fast.next;
+        ListNode temp=head,prev=head;
+        int l=0;
+        while(temp!=null){
+            temp=temp.next;
+            l++;
         }
-        // Move both pointers
-        while (fast != null) {
-            fast = fast.next;
-            slow = slow.next;
+        if(n==l){ 
+            return head.next;
         }
-        // Remove the node
-        slow.next = slow.next.next;
-        return dummy.next;
+        temp=head;
+        for(int i=1;i<l-n;i++){
+            temp=temp.next;
+        }
+        temp.next=temp.next.next;
+        return head;
     }
 }
 
