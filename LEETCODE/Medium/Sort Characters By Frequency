@@ -21,30 +21,27 @@ Constraints:-
 s consists of uppercase and lowercase English letters and digits.
 
 //code
-import java.util.*;
+
 class Solution {
-    public String frequencySort(String s) {        
-        int[] freq = new int[128];   // supports all ASCII characters
+    public String frequencySort(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
         // Count frequency
-        for(char c : s.toCharArray()){
-            freq[c]++;
-        }    
-        StringBuilder result = new StringBuilder();
-        while(true){
-            int maxIndex = -1;            
-            // Find character with maximum frequency
-            for(int i = 0; i < 128; i++){
-                if(freq[i] > 0 && (maxIndex == -1 || freq[i] > freq[maxIndex])){
-                    maxIndex = i;
-                }
-            }
-            if(maxIndex == -1) break;  // no more characters
-            // Append character freq times
-            for(int i = 0; i < freq[maxIndex]; i++){
-                result.append((char)maxIndex);
-            }
-            freq[maxIndex] = 0; // reset after using
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
         }
-        return result.toString();
+        // Convert map to list
+        List<Map.Entry<Character, Integer>> list =
+                new ArrayList<>(map.entrySet());
+        // Sort by frequency descending
+        list.sort((a, b) -> b.getValue() - a.getValue());
+        StringBuilder ans = new StringBuilder();
+        // Add each character according to its frequency
+        for (Map.Entry<Character, Integer> entry : list) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                ans.append(entry.getKey());
+            }
+        }
+        return ans.toString();
     }
 }
