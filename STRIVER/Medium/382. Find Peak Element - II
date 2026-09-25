@@ -1,0 +1,56 @@
+Given a 0-indexed n x m matrix mat where no two adjacent cells are equal, find any peak element mat[i][j] and return the array [i, j]. A peak element in a 2D grid is an element that is strictly greater than all of its adjacent neighbours to the left, right, top, and bottom.
+Assume that the entire matrix is surrounded by an outer perimeter with the value -1 in each cell.
+Note: As there can be many peak values, 1 is given as output if the returned index is a peak number, otherwise 0.
+
+Example 1:
+Input: mat=[[10, 20, 15], [21, 30, 14], [7, 16, 32]]
+Output: [1, 1]
+Explanation: The value at index [1, 1] is 30, which is a peak element because all its neighbours are smaller or equal to it. Similarly, {2, 2} can also be picked as a peak.
+Example 2:
+Input: mat=[[10, 7], [11, 17]]
+Output : [1, 1]
+Explanation: The value at index [1, 1] is 17, which is the only peak element because all its neighbours are smaller or equal to it.
+
+Constraints:
+  n == mat.length
+  m == mat[i].length
+  1 <= m, n <= 500
+  1 <= mat[i][j] <= 10^5
+  No two adjacent cells are equal
+
+//code
+class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+        int left = 0;
+        int right = mat[0].length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            // Find maximum row in column mid
+            int maxRow = 0;
+            for (int r = 1; r < mat.length; r++) {
+                if (mat[r][mid] > mat[maxRow][mid]) {
+                    maxRow = r;
+                }
+            }
+            // Current maximum element
+            int current = mat[maxRow][mid];
+            // Left neighbor
+            int leftValue = mid > 0 ? mat[maxRow][mid - 1] : -1;
+            // Right neighbor
+            int rightValue = mid < mat[0].length - 1 ? mat[maxRow][mid + 1] : -1;
+            // Found peak
+            if (current > leftValue && current > rightValue) {
+                return new int[]{maxRow, mid};
+            }
+            // Search left
+            if (leftValue > current) {
+                right = mid - 1;
+            }
+            // Search right
+            else {
+                left = mid + 1;
+            }
+        }
+        return new int[]{-1, -1};
+    }
+}
