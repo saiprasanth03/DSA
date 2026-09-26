@@ -1,0 +1,40 @@
+You are given a string s consisting of one or more words separated by single spaces. Your task is to capitalize the first and last character of each word in the string.
+If a word contains only one character, capitalize that character.
+Return the transformed string after applying the operation to all words.
+
+Example 1:
+Input: s = "take u forward is awesome"
+Output: "TakE U ForwarD IS AwesomE"
+Explanation: Each word's first and last characters are capitalized.
+Example 2:
+Input: s = "Take u Forward is Awesome"
+Output: "TakE U ForwarD IS AwesomE"
+Explanation: Already capitalized characters remain, others are capitalized.
+
+Constraints:
+1 <= s.length <= 10^5
+The string contains only lowercase and uppercase English letters and single spaces between words
+There are no leading or trailing spaces, and no multiple spaces between words
+Advertisements
+
+//code
+class Solution {
+    public String capitalizeFirstLast(String s) {
+        String[] a = s.split(" ");
+        String ans = "";
+        for (int i = 0; i < a.length; i++) {
+            String p = a[i];
+            char first = Character.toUpperCase(p.charAt(0));
+            char last = Character.toUpperCase(p.charAt(p.length() - 1));
+            if (p.length() == 1) {
+                ans += first;
+            } else {
+                ans += first + p.substring(1, p.length() - 1) + last;
+            }
+            if (i < a.length - 1) {
+                ans += " ";
+            }
+        }
+        return ans;
+    }
+}
