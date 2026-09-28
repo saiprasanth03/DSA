@@ -1,0 +1,44 @@
+Given a string s, return the longest palindromic substring in s.
+A palindromic substring is a contiguous sequence of characters within the string that reads the same forward and backward.
+Example 1:
+Input: s = "babad"
+Output: "bab"
+Explanation:
+Both "bab" and "aba" are valid palindromic substrings of length 3. Return either.
+Example 2:
+Input: s = "cbbd"
+Output: "bb"
+Explanation:
+The longest palindrome is "bb" of length 2.
+
+Constraints:
+1 <= s.length <= 1000
+s consists of only English letters (both lowercase and uppercase) and digits.
+
+//code
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s.length() < 2) {
+            return s;
+        }
+        int start = 0;
+        int end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expand(s, i, i);
+            int len2 = expand(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start + 1) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+    public static int expand(String s, int i, int j) {
+        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
+            i--;
+            j++;
+        }
+        return j - i - 1;
+    }
+}
