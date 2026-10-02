@@ -1,0 +1,85 @@
+Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+Note that after backspacing an empty text, the text will continue empty.
+ 
+Example 1:
+Input: s = "ab#c", t = "ad#c"
+Output: true
+Explanation: Both s and t become "ac".
+Example 2:
+Input: s = "ab##", t = "c#d#"
+Output: true
+Explanation: Both s and t become "".
+Example 3:
+Input: s = "a#c", t = "b"
+Output: false
+Explanation: s becomes "c" while t becomes "b".
+ 
+Constraints:
+1 <= s.length, t.length <= 200
+s and t only contain lowercase letters and '#' characters.
+
+//code using stack
+class Solution {
+    public boolean backspaceCompare(String s, String t) {
+        Stack<Character> st = new Stack<>();
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            if(ch!='#'){
+                st.push(ch);
+            }else{
+                if(!st.isEmpty())
+                    st.pop();
+            }
+        }
+        String s1="";
+        while(!st.isEmpty()){
+            s1 += st.pop();
+        }
+        for(int i=0;i<t.length();i++){
+            char ch=t.charAt(i);
+            if(ch!='#'){
+                st.push(ch);
+            }else{
+                if(!st.isEmpty())
+                    st.pop();
+            }
+        }
+        String s2="";
+        while(!st.isEmpty()){
+            s2 += st.pop();
+        }
+        if(s1.equals(s2)){
+            return true;
+        }
+        return false;
+    }
+}
+
+
+//another optimal solution 
+
+class Solution {
+    public boolean backspaceCompare(String s, String t) {
+
+        StringBuilder a = new StringBuilder();
+        StringBuilder b = new StringBuilder();
+
+        for (char ch : s.toCharArray()) {
+            if (ch != '#') {
+                a.append(ch);
+            } else if (a.length() > 0) {
+                a.deleteCharAt(a.length() - 1);
+            }
+        }
+
+        for (char ch : t.toCharArray()) {
+            if (ch != '#') {
+                b.append(ch);
+            } else if (b.length() > 0) {
+                b.deleteCharAt(b.length() - 1);
+            }
+        }
+
+        return a.toString().equals(b.toString());
+    }
+}
