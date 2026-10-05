@@ -1,0 +1,66 @@
+Given a string target, an array of strings words, and an integer array costs of the same length. You start with an empty string s and can perform the following operation any number of times to construct target with minimal cost:
+Choose an index i in the range [0, words.length - 1].
+Append words[i] to s.
+The cost of the operation is costs[i].
+The goal is to construct target using the given words while minimizing the total cost. If it is not possible to construct target, return -1.
+
+Example 1:
+Input: target = "qwerty", words = ["qwrty","qwe","r","rty","ty"], costs = [100,1,1,10,5]  
+Output: 7  
+Explanation:
+Append "qwe" (cost = 1) → s = "qwe"
+Append "r" (cost = 1) → s = "qwer"
+Append "ty" (cost = 5) → s = "qwerty"
+Total cost = 1 + 1 + 5 = 7
+Example 2:
+Input: target = "mmmm", words = ["s","ss","sss"], costs = [1,10,100]  
+Output: -1  
+Explanation:
+None of the words contain "m", so it's impossible to construct "mmmm".
+Return -1.
+
+Constraints:
+1 <= target.length <= 2000
+1 <= words.length == costs.length <= 50
+1 <= words[i].length <= target.length
+target and words[i] contain only lowercase English letters
+1 <= costs[i] <= 10^5
+
+//code
+class Solution {
+    public int minimumCost(String target, List<String> words, List<Integer> costs) {
+
+        int n = target.length();
+
+        int[] dp = new int[n + 1];
+
+        Arrays.fill(dp, Integer.MAX_VALUE);
+
+        dp[0] = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            // Cannot reach this position
+            if (dp[i] == Integer.MAX_VALUE) {
+                continue;
+            }
+
+            for (int j = 0; j < words.size(); j++) {
+
+                String word = words.get(j);
+
+                int next = i + word.length();
+
+                if (next <= n && target.startsWith(word, i)) {
+
+                    dp[next] = Math.min(
+                        dp[next],
+                        dp[i] + costs.get(j)
+                    );
+                }
+            }
+        }
+
+        return dp[n] == Integer.MAX_VALUE ? -1 : dp[n];
+    }
+}
