@@ -1,0 +1,37 @@
+You are given a string s representing a large non-negative integer. Your task is to determine whether this number is divisible by 9 or not.
+Due to the large size of the number, you cannot store it in standard numeric data types like int, long, or long long. You must process it as a string.
+A number is divisible by 9 if and only if the sum of its digits is divisible by 9.
+
+Example 1:
+Input: s = "69354"
+Output: Yes
+Explanation: 6+9+3+5+4 = 27, which is divisible by 9.
+Example 2:
+Input: s = "234567876799333"
+Output: No
+Explanation: The sum of the digits is not divisible by 9.
+
+Constraints:
+1 <= s.length <= 10^6
+s contains only digits ('0' to '9')
+The number will not have leading zeros unless it is "0" itself
+
+//code
+class Solution {
+    public boolean isDivisibleBy9(String s) {
+        // Your code goes here
+        int rem=0;
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            int val = (ch-'0');
+            if(val%9!=0){
+                rem += val%9;
+            }
+            if(rem%9==0){
+                rem=0;
+            }
+        }
+        return rem==0 ? true:false;
+    }
+}
+
