@@ -1,0 +1,36 @@
+You are given a string s. Your task is to calculate the frequency of each character in the string and return the result in a specific order.
+The result should consist of each distinct character followed by its frequency, sorted by character in ascending (lexicographical) order.
+
+Example 1:
+Input: s = "takeuforward"
+Output: "a2 d1 e1 f1 k1 o1 r2 t1 u1 w1"
+Explanation: Frequencies sorted by character: a → 2, d → 1, ..., w → 1
+Example 2:
+Input: s = "articles"
+Output: "a1 c1 e1 i1 l1 r1 s1 t1"
+Explanation: Sorted order: a, c, e, i, l, r, s, t
+
+Constraints:
+1 <= s.length <= 10^5
+The string contains only lowercase English letters ('a' to 'z')
+
+//code
+class Solution {
+    public String characterFrequency(String s) {
+        // Your code goes here
+        StringBuilder ans = new StringBuilder();
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            map.put(ch,map.getOrDefault(ch,0)+1);
+        }
+        List<Character> lst= new ArrayList<>(map.keySet());
+        Collections.sort(lst);
+        for(char ch : lst){
+            ans =ans.append(ch);
+            ans =ans.append(map.get(ch));
+            ans =ans.append(" ");
+        }
+        return ans.toString().trim();
+    }
+}
